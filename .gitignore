@@ -13,3 +13,6 @@ dist
 /.project
 /RUNNING_PID
 /.settings
+
+projectFilesBackup/.idea/libraries/SBT__org_scala_lang_scala_library_2_10_3.xml
+projectFilesBackup/.idea_modules/BelajarRestFulAPI.iml
