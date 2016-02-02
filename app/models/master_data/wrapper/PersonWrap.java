@@ -4,6 +4,7 @@ package models.master_data.wrapper;
  * Created by User on 2/2/2016.
  */
 public class PersonWrap {
+    private String id;
     private String nama;
     private Integer umur;
     private String lokasi;
@@ -11,10 +12,19 @@ public class PersonWrap {
     public PersonWrap() {
     }
 
-    public PersonWrap(String nama, Integer umur, String lokasi) {
+    public PersonWrap(String id, String nama, Integer umur, String lokasi) {
+        this.id = id;
         this.nama = nama;
         this.umur = umur;
         this.lokasi = lokasi;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNama() {
