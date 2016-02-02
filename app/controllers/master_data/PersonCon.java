@@ -1,4 +1,4 @@
-package controllers;
+package controllers.master_data;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.master_data.wrapper.PersonWrap;
@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Application extends Controller {
+public class PersonCon extends Controller {
 
     private static final Map<String,PersonWrap> tablePerson=new HashMap<>();
 
@@ -39,8 +39,14 @@ public class Application extends Controller {
     }
 
     public static Result findById(String id){
-
-        return null;
+        ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
+        PersonWrap personWrap = tablePerson.get(id);
+        responseWrapper.setData(personWrap);
+        List<Notification> notifications = new ArrayList<>();
+        Notification notification=new Notification("succes","200");
+        notifications.add(notification);
+        responseWrapper.setNotifications(notifications);
+        return ok(Json.toJson(responseWrapper));
     }
 
     @BodyParser.Of(BodyParser.Json.class)
@@ -49,10 +55,22 @@ public class Application extends Controller {
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         String uuid = java.util.UUID.randomUUID().toString();
         personWrap.setId(uuid);
-        tablePerson.put(uuid,personWrap);
-        return ok("Tersimpan");
+        tablePerson.put(uuid, personWrap);
+        return ok("create succes");
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result editPerson(String id){
+        JsonNode jsonNode = request().body().asJson();
+        PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
+        tablePerson.put(id,personWrap);
+        return ok("update succes");
+    }
+
+    public static Result deletePerson(String id){
+        tablePerson.remove(id);
+        return ok("delete succes");
+    }
 
 
     public static Result personName(){

@@ -2,10 +2,16 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
-GET     /                                             controllers.Application.index()
-GET      /api/person                                  controllers.Application.person()
-POST     /api/person/create                           controllers.Application.addPerson()
+# PersonController
+GET     /                                             controllers.master_data.PersonCon.index()
+GET      /api/person                                  controllers.master_data.PersonCon.person()
+GET      /api/person/:id                              controllers.master_data.PersonCon.findById(id:String)
+POST     /api/person/create                           controllers.master_data.PersonCon.addPerson()
+PUT      /api/person/:id/edit                         controllers.master_data.PersonCon.editPerson(id:String)
+DELETE   /api/person/:id/delete                       controllers.master_data.PersonCon.deletePerson(id:String)
+
+
+
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
