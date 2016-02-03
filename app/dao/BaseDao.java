@@ -1,5 +1,7 @@
 package dao;
 
+
+
 import play.db.jpa.JPA;
 
 import java.lang.reflect.ParameterizedType;
