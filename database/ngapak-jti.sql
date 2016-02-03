@@ -4,7 +4,7 @@
 
 -- Dumped from database version 9.3.9
 -- Dumped by pg_dump version 9.3.9
--- Started on 2016-02-03 11:09:10
+-- Started on 2016-02-03 11:20:04
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -22,7 +22,7 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 
 
 --
--- TOC entry 1936 (class 0 OID 0)
+-- TOC entry 1939 (class 0 OID 0)
 -- Dependencies: 171
 -- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
 --
@@ -37,26 +37,39 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- TOC entry 170 (class 1259 OID 75791)
--- Name: person; Type: TABLE; Schema: public; Owner: ngapak; Tablespace: 
+-- TOC entry 170 (class 1259 OID 75794)
+-- Name: student; Type: TABLE; Schema: public; Owner: ngapak; Tablespace: 
 --
 
-CREATE TABLE person (
+CREATE TABLE student (
+    id character varying(15) NOT NULL,
+    nama character varying(255),
+    alamat character varying(255),
+    umur integer
 );
 
 
-ALTER TABLE public.person OWNER TO ngapak;
+ALTER TABLE public.student OWNER TO ngapak;
 
 --
--- TOC entry 1928 (class 0 OID 75791)
+-- TOC entry 1931 (class 0 OID 75794)
 -- Dependencies: 170
--- Data for Name: person; Type: TABLE DATA; Schema: public; Owner: ngapak
+-- Data for Name: student; Type: TABLE DATA; Schema: public; Owner: ngapak
 --
 
 
 
 --
--- TOC entry 1935 (class 0 OID 0)
+-- TOC entry 1823 (class 2606 OID 75798)
+-- Name: id; Type: CONSTRAINT; Schema: public; Owner: ngapak; Tablespace: 
+--
+
+ALTER TABLE ONLY student
+    ADD CONSTRAINT id PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1938 (class 0 OID 0)
 -- Dependencies: 5
 -- Name: public; Type: ACL; Schema: -; Owner: postgres
 --
@@ -67,7 +80,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-02-03 11:09:10
+-- Completed on 2016-02-03 11:20:05
 
 --
 -- PostgreSQL database dump complete
