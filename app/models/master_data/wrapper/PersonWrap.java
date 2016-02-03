@@ -43,11 +43,13 @@ public class PersonWrap {
         this.umur = umur;
     }
 
-    public String getLokasi() {
+    public String getAlamat() {
         return alamat;
     }
 
-    public void setLokasi(String alamat) {
+    public void setAlamat(String alamat) {
         this.alamat = alamat;
     }
+
+
 }
