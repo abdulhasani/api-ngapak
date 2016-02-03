@@ -7,16 +7,16 @@ public class PersonWrap {
     private String id;
     private String nama;
     private Integer umur;
-    private String lokasi;
+    private String alamat;
 
     public PersonWrap() {
     }
 
-    public PersonWrap(String id, String nama, Integer umur, String lokasi) {
+    public PersonWrap(String id, String nama, Integer umur, String alamat) {
         this.id = id;
         this.nama = nama;
         this.umur = umur;
-        this.lokasi = lokasi;
+        this.alamat = alamat;
     }
 
     public String getId() {
@@ -44,10 +44,10 @@ public class PersonWrap {
     }
 
     public String getLokasi() {
-        return lokasi;
+        return alamat;
     }
 
-    public void setLokasi(String lokasi) {
-        this.lokasi = lokasi;
+    public void setLokasi(String alamat) {
+        this.alamat = alamat;
     }
 }
