@@ -1,2 +1,5 @@
 # api-ngapak
-belajar restful api, Hibernate,Spring
+
+Belajar RESTful API dengan Play, Hibernate, JPA.
+
+This file will be packaged with your application, when using `play dist`.
