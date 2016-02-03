@@ -25,6 +25,10 @@ public class PersonDao extends BaseDao<Person> {
         return singleResult;
     }
 
+    public void deleteById(String id){
+        JPA.em().createQuery("DELETE FROM Person p WHERE p.id=?").setParameter(1,id).executeUpdate();
+    }
+
     public List<Person> findyByNames(String nama,String umur,String alamat) {
         final String filterKeyNama = "nama";
         final String filterKeyUmur = "umur";
@@ -41,9 +45,9 @@ public class PersonDao extends BaseDao<Person> {
 
         Predicate predicatePoId = cb.like(filterKeyExpNama, "%" + nama + "%");
         Predicate predicatePrNo = cb.like(filterKeyExpUmur, "%" + umur + "%");
-        Predicate predicateBpmPoNo = cb.like(filterKeyExpAlamat, "%" + alamat + "%");
+        Predicate predicateAlamat = cb.like(filterKeyExpAlamat, "%" + alamat + "%");
 
-        q.where(cb.and(predicatePoId, predicatePrNo));
+        q.where(cb.and(predicatePoId, predicatePrNo,predicateAlamat));
         TypedQuery<Person> query = JPA.em().createQuery(q);
         List<Person> resultList = query.getResultList();
 
