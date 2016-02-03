@@ -1,0 +1,1 @@
+ALTER TABLE mtd_person ADD COLUMN id_person character varying(255);
