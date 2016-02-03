@@ -1,6 +1,7 @@
 package com.jti.tionlie.master_data.dao;
 
 import com.jti.tionlie.master_data.models.Person;
+import com.jti.tionlie.support.BaseDao;
 import play.db.jpa.JPA;
 
 import javax.persistence.TypedQuery;

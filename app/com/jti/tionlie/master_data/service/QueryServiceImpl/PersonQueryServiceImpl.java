@@ -1,6 +1,6 @@
 package com.jti.tionlie.master_data.service.QueryServiceImpl;
 
-import dao.PersonDao;
+import com.jti.tionlie.master_data.dao.PersonDao;
 import com.jti.tionlie.master_data.models.Person;
 import com.jti.tionlie.master_data.service.QuerryService.PersonQueryService;
 

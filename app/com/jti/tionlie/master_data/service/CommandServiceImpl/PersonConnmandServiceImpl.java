@@ -1,7 +1,7 @@
 package com.jti.tionlie.master_data.service.CommandServiceImpl;
 
 
-import dao.PersonDao;
+import com.jti.tionlie.master_data.dao.PersonDao;
 import com.jti.tionlie.master_data.models.Person;
 import com.jti.tionlie.master_data.wrapper.PersonWrap;
 import com.jti.tionlie.master_data.service.CommandService.PersonCommandService;
