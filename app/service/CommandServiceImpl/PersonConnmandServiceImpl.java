@@ -23,6 +23,16 @@ public class PersonConnmandServiceImpl implements PersonCommandService {
         return save;
     }
 
+    @Override
+    public Person update(PersonWrap wrap){
+        Person update = (Person) personDao.update(ConvertPerson.convertPerson(wrap));
+        return update;
+    }
+    @Override
+    public Person delete(PersonWrap wrap){
+
+        return null;
+    }
 
 
 }
