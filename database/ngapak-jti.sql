@@ -4,26 +4,7 @@
 
 -- Dumped from database version 9.3.9
 -- Dumped by pg_dump version 9.3.9
--- Started on 2016-02-03 10:58:34
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-
---
--- TOC entry 1928 (class 1262 OID 75790)
--- Name: ngapak-jti; Type: DATABASE; Schema: -; Owner: ngapak
---
-
-CREATE DATABASE "ngapak-jti" WITH TEMPLATE = template0 ENCODING = 'UTF8' LC_COLLATE = 'English_United States.1252' LC_CTYPE = 'English_United States.1252';
-
-
-ALTER DATABASE "ngapak-jti" OWNER TO ngapak;
-
-\connect "ngapak-jti"
+-- Started on 2016-02-03 11:05:11
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -61,7 +42,7 @@ GRANT ALL ON SCHEMA public TO postgres;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 
 
--- Completed on 2016-02-03 10:58:34
+-- Completed on 2016-02-03 11:05:11
 
 --
 -- PostgreSQL database dump complete
