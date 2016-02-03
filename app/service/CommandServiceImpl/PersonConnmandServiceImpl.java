@@ -30,7 +30,11 @@ public class PersonConnmandServiceImpl implements PersonCommandService {
     }
     @Override
     public Person delete(PersonWrap wrap){
+    return null;
+    }
 
+    @Override
+    public Person submitUpdate(PersonWrap wrap) {
         return null;
     }
 
