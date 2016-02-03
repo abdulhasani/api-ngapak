@@ -18,7 +18,7 @@ public class Person {
     @Column(name = "nama", nullable = false, length = 255)
     private String nama;
     @Column(name = "umur", nullable = false, length = 255)
-    private String umur;
+    private Integer umur;
     @Column(name = "alamat", nullable = false, length = 255)
     private String alamat;
 
@@ -38,11 +38,11 @@ public class Person {
         this.nama = nama;
     }
 
-    public String getUmur() {
+    public Integer getUmur() {
         return umur;
     }
 
-    public void setUmur(String umur) {
+    public void setUmur(Integer umur) {
         this.umur = umur;
     }
 
