@@ -1,12 +1,19 @@
 package controllers.master_data;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import models.master_data.Person;
 import models.master_data.wrapper.PersonWrap;
 
+import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
+import service.CommandService.PersonCommandService;
+import service.CommandServiceImpl.PersonConnmandServiceImpl;
+import service.QuerryService.PersonQueryService;
+import service.QueryServiceImpl.PersonQueryServiceImpl;
 import support.Notification;
+import support.converterEntity.ConvertPerson;
 import support.transfer.ArrayTransfer;
 import support.wrapper.ResponseWrapper;
 import views.html.*;
@@ -18,17 +25,24 @@ import java.util.Map;
 
 public class PersonCon extends Controller {
 
+    private static final PersonCommandService personCommandService=new PersonConnmandServiceImpl();
+    private static final PersonQueryService personQueryService=new PersonQueryServiceImpl();
+
+
     private static final Map<String,PersonWrap> tablePerson=new HashMap<>();
 
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }
 
+    @Transactional(readOnly = true)
     public static Result person(){
         ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper=new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
-        for (Map.Entry<String,PersonWrap> personWrap:tablePerson.entrySet()){
-            personWrapArr.addItem(personWrap.getValue());
+        List<Person> persons = personQueryService.findAll();
+        for (Person person:persons){
+            PersonWrap personWrap = ConvertPerson.convertPerson2(person);
+            personWrapArr.addItem(personWrap);
         }
         List<Notification> notifications = new ArrayList<>();
         Notification notification=new Notification("succes","200");
@@ -38,6 +52,7 @@ public class PersonCon extends Controller {
         return ok(Json.toJson(responseWrapper));
     }
 
+    @Transactional(readOnly = true)
     public static Result findById(String id){
         ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
         PersonWrap personWrap = tablePerson.get(id);
@@ -49,6 +64,7 @@ public class PersonCon extends Controller {
         return ok(Json.toJson(responseWrapper));
     }
 
+    @Transactional
     @BodyParser.Of(BodyParser.Json.class)
     public static Result addPerson(){
         JsonNode jsonNode = request().body().asJson();
@@ -59,6 +75,7 @@ public class PersonCon extends Controller {
         return ok("create succes");
     }
 
+    @Transactional
     @BodyParser.Of(BodyParser.Json.class)
     public static Result editPerson(String id){
         JsonNode jsonNode = request().body().asJson();
@@ -67,14 +84,13 @@ public class PersonCon extends Controller {
         return ok("update succes");
     }
 
+    @Transactional
     public static Result deletePerson(String id){
         tablePerson.remove(id);
         return ok("delete succes");
     }
 
 
-    public static Result personName(){
-        return ok();
-    }
+
 
 }

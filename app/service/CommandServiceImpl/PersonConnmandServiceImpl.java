@@ -1,11 +1,12 @@
 package service.CommandServiceImpl;
 
 
-import converterEntity.ConvertPerson;
+
 import dao.personDao.PersonDao;
 import models.master_data.Person;
 import models.master_data.wrapper.PersonWrap;
 import service.CommandService.PersonCommandService;
+import support.converterEntity.ConvertPerson;
 
 import java.util.List;
 import java.util.UUID;
