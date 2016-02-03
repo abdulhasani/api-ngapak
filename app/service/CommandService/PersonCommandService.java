@@ -9,5 +9,6 @@ import models.master_data.wrapper.PersonWrap;
 public interface PersonCommandService {
 
     public Person submit(PersonWrap wrap);
+    public Person submitUpdate(PersonWrap wrap);
 
 }

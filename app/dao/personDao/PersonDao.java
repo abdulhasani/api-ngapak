@@ -19,6 +19,12 @@ public class PersonDao extends BaseDao<Person> {
         return singleResult;
     }
 
+    public Person findById(String id){
+        Person singleResult = (Person) JPA.em().createQuery("SELECT p FROM Person p WHERE p.id=?")
+                .setParameter(1, id).getSingleResult();
+        return singleResult;
+    }
+
     public List<Person> findyByNames(String nama,Integer umur,String alamat) {
         final String filterKeyNama = "nama";
         final String filterKeyUmur = "umur";
