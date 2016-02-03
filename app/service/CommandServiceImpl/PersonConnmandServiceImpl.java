@@ -1,7 +1,6 @@
 package service.CommandServiceImpl;
 
 
-
 import dao.personDao.PersonDao;
 import models.master_data.Person;
 import models.master_data.wrapper.PersonWrap;
@@ -16,7 +15,7 @@ import java.util.UUID;
  */
 public class PersonConnmandServiceImpl implements PersonCommandService {
 
-   private final PersonDao personDao = new PersonDao();
+    private final PersonDao personDao = new PersonDao();
 
     @Override
     public Person submit(PersonWrap wrap) {
@@ -25,19 +24,27 @@ public class PersonConnmandServiceImpl implements PersonCommandService {
     }
 
     @Override
-    public Person update(PersonWrap wrap){
-        Person update = (Person) personDao.update(ConvertPerson.convertPerson(wrap));
+    public Person update(PersonWrap wrap) {
+
+        PersonWrap oldWrap = ConvertPerson.convertPerson2(personDao.findById(wrap.getId()));
+        Person update = null;
+
+        if (!oldWrap.getNama().equalsIgnoreCase(wrap.getNama()) ||
+                oldWrap.getUmur() != wrap.getUmur() ||
+                !oldWrap.getAlamat().equalsIgnoreCase(wrap.getAlamat())) {
+
+            update = (Person) personDao.update(ConvertPerson.convertPerson(wrap));
+        }
+
         return update;
     }
-    @Override
-    public Person delete(PersonWrap wrap){
-    return null;
-    }
 
     @Override
-    public Person submitUpdate(PersonWrap wrap) {
-        return null;
+    public void delete(PersonWrap wrap) {
+        if (wrap.getId() != null) {
+            Person person = personDao.findById(wrap.getId());
+            personDao.delete(person);
+        }
     }
-
 
 }
