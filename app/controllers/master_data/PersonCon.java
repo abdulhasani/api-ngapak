@@ -53,6 +53,35 @@ public class PersonCon extends Controller {
     }
 
     @Transactional(readOnly = true)
+    public static Result findyByNama(String nama){
+        ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
+        PersonWrap personWrap = ConvertPerson.convertPerson2(personQueryService.findByName(nama));
+        List<Notification> notifications = new ArrayList<>();
+        Notification notification=new Notification("succes","200");
+        notifications.add(notification);
+        responseWrapper.setData(personWrap);
+        responseWrapper.setNotifications(notifications);
+        return ok(Json.toJson(responseWrapper));
+    }
+
+    @Transactional(readOnly = true)
+    public static Result filter(String nama,String umur,String alamat){
+        List<Person> bynameAgeAddressLike = personQueryService.findBynameAgeAddressLike(nama,umur, alamat);
+        ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper=new ResponseWrapper<>();
+        ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
+        for (Person person:bynameAgeAddressLike){
+            PersonWrap personWrap = ConvertPerson.convertPerson2(person);
+            personWrapArr.addItem(personWrap);
+        }
+        List<Notification> notifications = new ArrayList<>();
+        Notification notification=new Notification("succes","200");
+        notifications.add(notification);
+        responseWrapper.setData(personWrapArr);
+        responseWrapper.setNotifications(notifications);
+        return ok(Json.toJson(responseWrapper));
+    }
+
+    @Transactional(readOnly = true)
     public static Result findById(String id){
         ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
         PersonWrap personWrap = tablePerson.get(id);
@@ -80,7 +109,7 @@ public class PersonCon extends Controller {
     public static Result editPerson(String id){
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
-        tablePerson.put(id,personWrap);
+        tablePerson.put(id, personWrap);
         return ok("update succes");
     }
 

@@ -3,12 +3,14 @@
 # ~~~~
 
 # PersonController
-GET     /                                             controllers.master_data.PersonCon.index()
-GET      /api/person                                  controllers.master_data.PersonCon.person()
-GET      /api/person/:id                              controllers.master_data.PersonCon.findById(id:String)
-POST     /api/person/create                           controllers.master_data.PersonCon.addPerson()
-PUT      /api/person/:id/edit                         controllers.master_data.PersonCon.editPerson(id:String)
-DELETE   /api/person/:id/delete                       controllers.master_data.PersonCon.deletePerson(id:String)
+GET     /                                                   controllers.master_data.PersonCon.index()
+GET      /api/person                                        controllers.master_data.PersonCon.person()
+GET      /api/person/findByNama/:nama                       controllers.master_data.PersonCon.findyByNama(nama:String)
+GET      /api/person/filter                                 controllers.master_data.PersonCon.filter(nama ?= "" ,umur ?="" , alamat ?="")
+GET      /api/person/:id                                    controllers.master_data.PersonCon.findById(id:String)
+POST     /api/person/create                                 controllers.master_data.PersonCon.addPerson()
+PUT      /api/person/:id/edit                               controllers.master_data.PersonCon.editPerson(id:String)
+DELETE   /api/person/:id/delete                             controllers.master_data.PersonCon.deletePerson(id:String)
 
 
 

@@ -25,7 +25,7 @@ public class PersonDao extends BaseDao<Person> {
         return singleResult;
     }
 
-    public List<Person> findyByNames(String nama,Integer umur,String alamat) {
+    public List<Person> findyByNames(String nama,String umur,String alamat) {
         final String filterKeyNama = "nama";
         final String filterKeyUmur = "umur";
         final String filterKeyAlamat = "alamat";

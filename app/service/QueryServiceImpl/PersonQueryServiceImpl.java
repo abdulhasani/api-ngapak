@@ -31,7 +31,7 @@ public class PersonQueryServiceImpl implements PersonQueryService{
     }
 
     @Override
-    public List<Person> findBynameAgeAddressLike(String name, Integer age, String address) {
+    public List<Person> findBynameAgeAddressLike(String name, String age, String address) {
         return personDao.findyByNames(name,age,address);
     }
 

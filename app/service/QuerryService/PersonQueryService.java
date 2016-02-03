@@ -11,6 +11,6 @@ public interface PersonQueryService {
 
     Person findByName(String name);
     List<Person> findAll();
-    List<Person> findBynameAgeAddressLike(String name, Integer age, String address);
+    List<Person> findBynameAgeAddressLike(String name, String age, String address);
 
 }
