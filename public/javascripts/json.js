@@ -19,6 +19,8 @@
         });
     };
 
+
+
     //ambil data person
     var process_person = function(person){  //person ngambil dari data.data
         $.each(person,function(i,orang){ //looping untuk array
@@ -38,33 +40,48 @@
     };
 
     //post
-
     function submitForm(){
+//        var formData = {
+//            nama: "Albert",
+//            alamat: "Jakarta",
+//            umur: 14
+//        };
+//        // construct an HTTP request
+//        var xhr = new XMLHttpRequest();
+//        xhr.open('POST', 'api/person/create' );
+//        console.log(JSON.stringify(formData));
+//
+//        // send the collected data as JSON
+//        xhr.send(JSON.stringify(formData));
+//        event.preventDefault();
+//
+//
+//        xhr.onloadend = function () {
+//          // done
+//          }
+
         var formData = {
             nama: "Albert",
             alamat: "Jakarta",
             umur: 14
         };
-        // construct an HTTP request
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', '/api/person/create' );
+        $.ajax({
+            type: 'POST',
+            url: 'api/person/create',
+            data: JSON.stringify(formData),
+            beforeSend:function(jqXHR, settings){
+                jqXHR.setRequestHeader('Content-Type', 'application/json');     //ini tipe data json
+            },
+            //dataType: "json",
+            success: function(data){
+                alert(data);
+                var acak = JSON.stringify(formData);      //data.data karena ada objek di dalam objek
+                console.log(data);      //kebenaran ditegakkan!
 
-        // send the collected data as JSON
-        xhr.send(JSON.stringify(formData));
-
-        xhr.onloadend = function () {
-          // done
-        };
-//        $.ajax({
-//            type: 'POST',
-//            url: '/api/person/create',
-//            dataType: 'json',
-//            beforeSend:function(jqXHR, settings){
-//                jqXHR.setRequestHeader('Content-Type', 'application/json');     //ini tipe data json
-//            },
-//            success: function(data, textStatus, jqXHR){
-//                var acak = JSON.stringify(formData);      //data.data karena ada objek di dalam objek
-//                console.log(acak);      //kebenaran ditegakkan!
-//            }
-//        });
+            },
+            failure: function(errMsg) {
+                    alert(errMsg);
+            }
+        });
+        event.preventDefault();
     };
