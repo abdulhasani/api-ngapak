@@ -18,10 +18,10 @@ import support.transfer.ArrayTransfer;
 import support.wrapper.ResponseWrapper;
 import views.html.*;
 
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 public class PersonCon extends Controller {
 
@@ -115,6 +115,9 @@ public class PersonCon extends Controller {
         personCommandService.delettById(id);
         return ok("delete succes");
     }
+
+
+
 
 
 }

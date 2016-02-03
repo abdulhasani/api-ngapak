@@ -61,9 +61,9 @@
 //          }
 
         var formData = {
-            nama: "Albert",
-            alamat: "Jakarta",
-            umur: 14
+            nama: "bongkrek",
+            alamat: "Purwokerto",
+            umur: 30
         };
         $.ajax({
             type: 'POST',
