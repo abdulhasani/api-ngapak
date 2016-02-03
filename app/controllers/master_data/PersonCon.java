@@ -25,27 +25,24 @@ import java.util.Map;
 
 public class PersonCon extends Controller {
 
-    private static final PersonCommandService personCommandService=new PersonConnmandServiceImpl();
-    private static final PersonQueryService personQueryService=new PersonQueryServiceImpl();
-
-
-    private static final Map<String,PersonWrap> tablePerson=new HashMap<>();
+    private static final PersonCommandService personCommandService = new PersonConnmandServiceImpl();
+    private static final PersonQueryService personQueryService = new PersonQueryServiceImpl();
 
     public static Result index() {
         return ok(index.render("Your new application is ready."));
     }
 
     @Transactional(readOnly = true)
-    public static Result person(){
-        ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper=new ResponseWrapper<>();
+    public static Result person() {
+        ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper = new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
         List<Person> persons = personQueryService.findAll();
-        for (Person person:persons){
+        for (Person person : persons) {
             PersonWrap personWrap = ConvertPerson.convertPerson2(person);
             personWrapArr.addItem(personWrap);
         }
         List<Notification> notifications = new ArrayList<>();
-        Notification notification=new Notification("succes","200");
+        Notification notification = new Notification("succes", "200");
         notifications.add(notification);
         responseWrapper.setData(personWrapArr);
         responseWrapper.setNotifications(notifications);
@@ -53,11 +50,11 @@ public class PersonCon extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result findyByNama(String nama){
-        ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
+    public static Result findyByNama(String nama) {
+        ResponseWrapper<PersonWrap> responseWrapper = new ResponseWrapper<>();
         PersonWrap personWrap = ConvertPerson.convertPerson2(personQueryService.findByName(nama));
         List<Notification> notifications = new ArrayList<>();
-        Notification notification=new Notification("succes","200");
+        Notification notification = new Notification("succes", "200");
         notifications.add(notification);
         responseWrapper.setData(personWrap);
         responseWrapper.setNotifications(notifications);
@@ -65,16 +62,16 @@ public class PersonCon extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result filter(String nama,String umur,String alamat){
-        List<Person> bynameAgeAddressLike = personQueryService.findBynameAgeAddressLike(nama,umur, alamat);
-        ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper=new ResponseWrapper<>();
+    public static Result filter(String nama, String umur, String alamat) {
+        List<Person> bynameAgeAddressLike = personQueryService.findBynameAgeAddressLike(nama, umur, alamat);
+        ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper = new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
-        for (Person person:bynameAgeAddressLike){
+        for (Person person : bynameAgeAddressLike) {
             PersonWrap personWrap = ConvertPerson.convertPerson2(person);
             personWrapArr.addItem(personWrap);
         }
         List<Notification> notifications = new ArrayList<>();
-        Notification notification=new Notification("succes","200");
+        Notification notification = new Notification("succes", "200");
         notifications.add(notification);
         responseWrapper.setData(personWrapArr);
         responseWrapper.setNotifications(notifications);
@@ -82,12 +79,11 @@ public class PersonCon extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result findById(String id){
-        ResponseWrapper<PersonWrap> responseWrapper=new ResponseWrapper<>();
-        PersonWrap personWrap = tablePerson.get(id);
-        responseWrapper.setData(personWrap);
+    public static Result findById(String id) {
+        ResponseWrapper<PersonWrap> responseWrapper = new ResponseWrapper<>();
+        //responseWrapper.setData(personWrap);
         List<Notification> notifications = new ArrayList<>();
-        Notification notification=new Notification("succes","200");
+        Notification notification = new Notification("succes", "200");
         notifications.add(notification);
         responseWrapper.setNotifications(notifications);
         return ok(Json.toJson(responseWrapper));
@@ -95,31 +91,30 @@ public class PersonCon extends Controller {
 
     @Transactional
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result addPerson(){
+    public static Result addPerson() {
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         String uuid = java.util.UUID.randomUUID().toString();
         personWrap.setId(uuid);
-        tablePerson.put(uuid, personWrap);
+        personCommandService.submit(personWrap);
         return ok("create succes");
     }
 
     @Transactional
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result editPerson(String id){
+    public static Result editPerson(String id) {
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
-        tablePerson.put(id, personWrap);
+        personWrap.setId(id);
+        Person update = personCommandService.update(personWrap);
         return ok("update succes");
     }
 
     @Transactional
-    public static Result deletePerson(String id){
-        tablePerson.remove(id);
+    public static Result deletePerson(String id) {
+        personCommandService.delettById(id);
         return ok("delete succes");
     }
-
-
 
 
 }

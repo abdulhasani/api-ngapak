@@ -25,6 +25,10 @@ public class PersonDao extends BaseDao<Person> {
         return singleResult;
     }
 
+    public void deleteById(String id){
+        JPA.em().createQuery("DELETE FROM Person p WHERE p.id=?").setParameter(1,id).executeUpdate();
+    }
+
     public List<Person> findyByNames(String nama,String umur,String alamat) {
         final String filterKeyNama = "nama";
         final String filterKeyUmur = "umur";

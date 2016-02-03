@@ -11,5 +11,6 @@ public interface PersonCommandService {
     public Person submit(PersonWrap wrap);
     public Person update(PersonWrap wrap);
     public void delete(PersonWrap wrap);
+    public void delettById(String id);
 
 }

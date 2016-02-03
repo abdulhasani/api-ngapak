@@ -47,4 +47,13 @@ public class PersonConnmandServiceImpl implements PersonCommandService {
         }
     }
 
+    @Override
+    public void delettById(String id) {
+        if(id!=null){
+            if(!id.trim().isEmpty()){
+                personDao.deleteById(id);
+            }
+        }
+    }
+
 }

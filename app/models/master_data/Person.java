@@ -13,11 +13,11 @@ import javax.persistence.Table;
 public class Person {
 
     @Id
-    @Column(name = "id_person", nullable = false, length = 15)
+    @Column(name = "id_person", nullable = false)
     private String id;
     @Column(name = "nama", nullable = false, length = 255)
     private String nama;
-    @Column(name = "umur", nullable = false, length = 255)
+    @Column(name = "umur", nullable = false, length = 3)
     private Integer umur;
     @Column(name = "alamat", nullable = false, length = 255)
     private String alamat;
