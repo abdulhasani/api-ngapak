@@ -34,7 +34,7 @@ public class PersonCon extends Controller {
     }
 
     @Transactional(readOnly = true)
-    public static Result person() {
+    public static Result findAll() {
         ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper = new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
         List<Person> persons = personQueryService.findAll();
