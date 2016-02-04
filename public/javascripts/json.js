@@ -5,7 +5,7 @@
 
     var get_cities = function() {
         $.ajax({
-            url: '/api/person',
+            url: '/api/persons',
             processData:false,
             type: 'GET',
             dataType: 'json',
