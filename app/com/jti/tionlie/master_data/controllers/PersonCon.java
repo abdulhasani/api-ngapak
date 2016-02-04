@@ -17,7 +17,6 @@ import com.jti.tionlie.master_data.service.QueryServiceImpl.PersonQueryServiceIm
 
 import com.jti.tionlie.support.converterEntity.ConvertPerson;
 import com.jti.tionlie.support.wrapper.ResponseWrapper;
-import views.html.*;
 import com.jti.tionlie.master_data.wrapper.PersonWrap;
 
 import java.util.ArrayList;
