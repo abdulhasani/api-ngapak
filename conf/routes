@@ -13,6 +13,10 @@ PUT      /api/person/:id/edit                               com.jti.tionlie.mast
 DELETE   /api/person/:id/delete                             com.jti.tionlie.master_data.controllers.PersonCon.deletePerson(id:String)
 
 
+# CityController
+POST    /api/city/create                                       @com.jti.tionlie.master_data.controllers.CityCon.addCity()
+
+
 
 
 

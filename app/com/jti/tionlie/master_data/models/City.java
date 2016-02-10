@@ -1,22 +1,23 @@
-package com.jti.tionlie.master_data.wrapper;
+package com.jti.tionlie.master_data.models;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
- * Created by HP on 02/02/2016.
+ * Created by User on 2/9/2016.
  */
-public class CityWrap {
-
+@Entity
+@Table(name = "mtd_city")
+public class City {
+    @Id
+    @Column(name = "id_city",nullable = false)
     private String id;
+    @Column(name = "name",nullable = false)
     private String name;
+    @Column(name = "postcal_code",nullable = false)
     private String postalCode;
-
-    public CityWrap() {
-    }
-
-    public CityWrap(String id, String name, String postalCode) {
-        this.id = id;
-        this.name = name;
-        this.postalCode = postalCode;
-    }
 
     public String getId() {
         return id;
