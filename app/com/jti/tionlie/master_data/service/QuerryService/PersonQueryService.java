@@ -9,8 +9,8 @@ import java.util.List;
  */
 public interface PersonQueryService {
 
-    Person findByName(String name);
+    Person findByNama(String nama);
     List<Person> findAll();
-    List<Person> findBynameAgeAddressLike(String name, String age, String address);
+    List<Person> findBynameAgeAddressLike(String nama, String age, String address);
 
 }

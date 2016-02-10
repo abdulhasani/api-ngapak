@@ -6,7 +6,8 @@ import com.jti.tionlie.master_data.models.Person;
 
 import com.jti.tionlie.support.Notification;
 import com.jti.tionlie.support.transfer.ArrayTransfer;
-import play.db.jpa.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
@@ -19,14 +20,27 @@ import com.jti.tionlie.support.converterEntity.ConvertPerson;
 import com.jti.tionlie.support.wrapper.ResponseWrapper;
 import com.jti.tionlie.master_data.wrapper.PersonWrap;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.util.ArrayList;
 import java.util.List;
 
 
+@Named
+@Singleton
 public class PersonCon extends Controller {
 
-    private static final PersonCommandService personCommandService = new PersonConnmandServiceImpl();
-    private static final PersonQueryService personQueryService = new PersonQueryServiceImpl();
+
+    private static PersonCommandService personConnmandServiceImpl;
+
+    private static PersonQueryService personQueryServiceImpl;
+
+    @Inject
+    public PersonCon(PersonCommandService personConnmandServiceImpl, PersonQueryService personQueryServiceImpl) {
+        this.personConnmandServiceImpl = personConnmandServiceImpl;
+        this.personQueryServiceImpl = personQueryServiceImpl;
+    }
 
     public static Result index() {
         return ok(com.jti.tionlie.master_data.views.html.index.render("Your new application is ready."));
@@ -36,7 +50,7 @@ public class PersonCon extends Controller {
     public static Result findAll() {
         ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper = new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
-        List<Person> persons = personQueryService.findAll();
+        List<Person> persons = personQueryServiceImpl.findAll();
         for (Person person : persons) {
             PersonWrap personWrap = ConvertPerson.convertPerson2(person);
             personWrapArr.addItem(personWrap);
@@ -52,7 +66,7 @@ public class PersonCon extends Controller {
     @Transactional(readOnly = true)
     public static Result findyByNama(String nama) {
         ResponseWrapper<PersonWrap> responseWrapper = new ResponseWrapper<>();
-        PersonWrap personWrap = ConvertPerson.convertPerson2(personQueryService.findByName(nama));
+        PersonWrap personWrap = ConvertPerson.convertPerson2(personQueryServiceImpl.findByNama(nama));
         List<Notification> notifications = new ArrayList<>();
         Notification notification = new Notification("succes", "200");
         notifications.add(notification);
@@ -61,9 +75,9 @@ public class PersonCon extends Controller {
         return ok(Json.toJson(responseWrapper));
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public static Result filter(String nama, String umur, String alamat) {
-        List<Person> bynameAgeAddressLike = personQueryService.findBynameAgeAddressLike(nama, umur, alamat);
+        List<Person> bynameAgeAddressLike = personQueryServiceImpl.findBynameAgeAddressLike("%" + nama + "%", "%" + umur + "%", "%" + alamat + "%");
         ResponseWrapper<ArrayTransfer<PersonWrap>> responseWrapper = new ResponseWrapper<>();
         ArrayTransfer<PersonWrap> personWrapArr = new ArrayTransfer<PersonWrap>(PersonWrap.class);
         for (Person person : bynameAgeAddressLike) {
@@ -96,7 +110,7 @@ public class PersonCon extends Controller {
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         String uuid = java.util.UUID.randomUUID().toString();
         personWrap.setId(uuid);
-        personCommandService.submit(personWrap);
+        personConnmandServiceImpl.submit(personWrap);
         return ok("create succes");
     }
 
@@ -106,18 +120,15 @@ public class PersonCon extends Controller {
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         personWrap.setId(id);
-        Person update = personCommandService.update(personWrap);
+        Person update = personConnmandServiceImpl.update(personWrap);
         return ok("update succes");
     }
 
     @Transactional
     public static Result deletePerson(String id) {
-        personCommandService.delettById(id);
+        personConnmandServiceImpl.delettById(id);
         return ok("delete succes");
     }
-
-
-
 
 
 }

@@ -4,8 +4,8 @@
 
 # PersonController
 GET     /                                                   com.jti.tionlie.master_data.controllers.PersonCon.index()
-GET      /api/persons                                        com.jti.tionlie.master_data.controllers.PersonCon.findAll()
-GET      /api/person/findByNama/:nama                       com.jti.tionlie.master_data.controllers.PersonCon.findyByNama(nama:String)
+GET      /api/persons                                       com.jti.tionlie.master_data.controllers.PersonCon.findAll()
+GET      /api/person/findByNama/:nama                      com.jti.tionlie.master_data.controllers.PersonCon.findyByNama(nama:String)
 GET      /api/person/filter                                 com.jti.tionlie.master_data.controllers.PersonCon.filter(nama ?= "" ,umur ?="" , alamat ?="")
 GET      /api/person/:id                                    com.jti.tionlie.master_data.controllers.PersonCon.findById(id:String)
 POST     /api/person/create                                 com.jti.tionlie.master_data.controllers.PersonCon.addPerson()

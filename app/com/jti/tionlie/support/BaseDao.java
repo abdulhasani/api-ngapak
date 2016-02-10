@@ -2,8 +2,11 @@ package com.jti.tionlie.support;
 
 
 
+
 import play.db.jpa.JPA;
 
+import javax.inject.Named;
+import javax.inject.Singleton;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.UUID;
@@ -22,23 +25,28 @@ public class BaseDao<T> {
                                 getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
+
     public T save(T domain) {
         JPA.em().persist(domain);
         return domain;
     }
+
 
     public T update(T domain) {
         JPA.em().merge(domain);
         return domain;
     }
 
+
     public void delete(T domain) {
         JPA.em().remove(domain);
     }
 
+
     public T getById(UUID id) {
         return (T) JPA.em().createQuery("SELECT xx FROM "+domainClass.getName()+" xx WHERE xx.id=:id").setParameter("id",id).getSingleResult();
     }
+
 
     public Long count() {
         List list = JPA.em().
@@ -47,9 +55,11 @@ public class BaseDao<T> {
         return count;
     }
 
+
     public List<T> getAll() {
         return JPA.em().createQuery("FROM " + domainClass.getName()).getResultList();
     }
+
 
     public List<T> getAll(int start,int num){
         return JPA.em().createQuery("FROM " + domainClass.getName()).setFirstResult(start)
