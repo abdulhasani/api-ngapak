@@ -4,17 +4,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.jti.tionlie.master_data.models.Person;
 
 
+import com.jti.tionlie.master_data.service.CommandService.CityCommandService;
+import com.jti.tionlie.master_data.wrapper.CityWrap;
 import com.jti.tionlie.support.Notification;
 import com.jti.tionlie.support.transfer.ArrayTransfer;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import play.libs.Json;
 import play.mvc.*;
 
 import com.jti.tionlie.master_data.service.CommandService.PersonCommandService;
-import com.jti.tionlie.master_data.service.CommandServiceImpl.PersonConnmandServiceImpl;
 import com.jti.tionlie.master_data.service.QuerryService.PersonQueryService;
-import com.jti.tionlie.master_data.service.QueryServiceImpl.PersonQueryServiceImpl;
 
 import com.jti.tionlie.support.converterEntity.ConvertPerson;
 import com.jti.tionlie.support.wrapper.ResponseWrapper;
@@ -32,14 +32,18 @@ import java.util.List;
 public class PersonCon extends Controller {
 
 
-    private static PersonCommandService personConnmandServiceImpl;
-
+    private static PersonCommandService personCommandServiceImpl;
     private static PersonQueryService personQueryServiceImpl;
+    private static CityCommandService cityCommandService;
+
 
     @Inject
-    public PersonCon(PersonCommandService personConnmandServiceImpl, PersonQueryService personQueryServiceImpl) {
-        this.personConnmandServiceImpl = personConnmandServiceImpl;
+    public PersonCon(PersonCommandService personConnmandServiceImpl,
+                     PersonQueryService personQueryServiceImpl,
+                     CityCommandService cityCommandService) {
+        this.personCommandServiceImpl = personConnmandServiceImpl;
         this.personQueryServiceImpl = personQueryServiceImpl;
+        this.cityCommandService=cityCommandService;
     }
 
     public static Result index() {
@@ -103,14 +107,22 @@ public class PersonCon extends Controller {
         return ok(Json.toJson(responseWrapper));
     }
 
-    @Transactional
     @BodyParser.Of(BodyParser.Json.class)
+    @Transactional(propagation = Propagation.SUPPORTS,
+            rollbackFor = {Exception.class,RuntimeException.class}
+    )
     public static Result addPerson() {
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         String uuid = java.util.UUID.randomUUID().toString();
         personWrap.setId(uuid);
-        personConnmandServiceImpl.submit(personWrap);
+        personCommandServiceImpl.submit(personWrap);
+        CityWrap cityWrap = new CityWrap();
+        String uidCity = java.util.UUID.randomUUID().toString();
+        cityWrap.setId(uidCity);
+        cityWrap.setName("Jakarta");
+        cityWrap.setPostalCode("jawaTengah");
+        cityCommandService.sumbit(null);
         return ok("create succes");
     }
 
@@ -120,13 +132,13 @@ public class PersonCon extends Controller {
         JsonNode jsonNode = request().body().asJson();
         PersonWrap personWrap = Json.fromJson(jsonNode, PersonWrap.class);
         personWrap.setId(id);
-        Person update = personConnmandServiceImpl.update(personWrap);
+        Person update = personCommandServiceImpl.update(personWrap);
         return ok("update succes");
     }
 
     @Transactional
     public static Result deletePerson(String id) {
-        personConnmandServiceImpl.delettById(id);
+        personCommandServiceImpl.delettById(id);
         return ok("delete succes");
     }
 

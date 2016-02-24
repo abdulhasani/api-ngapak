@@ -16,14 +16,14 @@ import java.util.UUID;
 /**
  * Created by User TEGAR on 2/3/2016.
  */
-@Service("personConnmandServiceImpl")
-@Transactional(readOnly = false)
-public class PersonConnmandServiceImpl implements PersonCommandService {
+@Service("personCommandServiceImpl")
+@Transactional(readOnly = false,propagation = Propagation.SUPPORTS)
+public class PersonCommandServiceImpl implements PersonCommandService {
 
     private final PersonDao personDao;
 
     @Inject
-    public PersonConnmandServiceImpl(PersonDao personDao) {
+    public PersonCommandServiceImpl(PersonDao personDao) {
         this.personDao = personDao;
     }
 

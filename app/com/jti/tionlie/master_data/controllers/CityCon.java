@@ -6,6 +6,7 @@ import com.jti.tionlie.master_data.dao.CityDao;
 import com.jti.tionlie.master_data.service.CommandService.CityCommandService;
 import com.jti.tionlie.master_data.wrapper.CityWrap;
 import com.jti.tionlie.support.converterEntity.ConvertCity;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import play.libs.Json;
 import play.mvc.BodyParser;

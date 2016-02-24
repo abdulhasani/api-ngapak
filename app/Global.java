@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.hibernate3.HibernateExceptionTranslator;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import play.Application;
 import play.GlobalSettings;
@@ -18,12 +19,12 @@ public class Global extends GlobalSettings {
     /**
      *
      */
-    static final String DEFAULT_PRESISTENCE_UNIT="defaultPersistenceUnit";
+    static final String DEFAULT_PRESISTENCE_UNIT = "defaultPersistenceUnit";
 
     /**
      *
      */
-    private AnnotationConfigApplicationContext ctx=new AnnotationConfigApplicationContext();
+    private AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
 
     /**
      *
@@ -58,23 +59,27 @@ public class Global extends GlobalSettings {
     }
 
     @Configuration
+    @EnableTransactionManagement
     @EnableJpaRepositories(basePackages = {
             "com.jti.tionlie.master_data.dao"})
-    public static class SpringDataJpaConfiguration{
+    public static class SpringDataJpaConfiguration {
 
         @Bean
-        public EntityManagerFactory entityManagerFactory(){
-            return Persistence.createEntityManagerFactory(DEFAULT_PRESISTENCE_UNIT);
+        public EntityManagerFactory entityManagerFactory() {
+            EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory(DEFAULT_PRESISTENCE_UNIT);
+            return entityManagerFactory;
         }
 
         @Bean
-        public HibernateExceptionTranslator hibernateExceptionTranslator(){
+        public HibernateExceptionTranslator hibernateExceptionTranslator() {
             return new HibernateExceptionTranslator();
         }
 
         @Bean
-        public JpaTransactionManager transactionManager(){
-            return new JpaTransactionManager();
+        public PlatformTransactionManager transactionManager() {
+            JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+            jpaTransactionManager.setEntityManagerFactory(entityManagerFactory());
+            return jpaTransactionManager;
         }
     }
 }

@@ -5,6 +5,7 @@ import com.jti.tionlie.support.BaseDao;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 import play.db.jpa.JPA;
 
@@ -18,8 +19,7 @@ import java.util.UUID;
 /**
  * Created by User TEGAR on 2/3/2016.
  */
-@Named
-@Singleton
+@Repository
 public interface PersonDao extends CrudRepository<Person, UUID> {
 
     public List<Person> findAll();

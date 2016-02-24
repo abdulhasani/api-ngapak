@@ -15,7 +15,7 @@ import javax.inject.Inject;
  * Created by User on 2/9/2016.
  */
 @Service("cityCommandService")
-@Transactional(readOnly = false, propagation = Propagation.REQUIRED)
+@Transactional(readOnly = false, propagation = Propagation.SUPPORTS)
 public class CityCommandServiceImpl implements CityCommandService{
     private final CityDao cityDao;
 
